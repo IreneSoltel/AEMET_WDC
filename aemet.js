@@ -79,8 +79,8 @@
             apiUrl = baseUrl + "/observacion/convencional/todas";
         }
         
-        // Usamos nuestro propio proxy en lugar del de Tableau
-        var proxyUrl = "http://localhost:3000/proxy/aemet?url=" + encodeURIComponent(apiUrl) + "&apiKey=" + encodeURIComponent(apiKey);
+        // Usamos URLs relativas para que funcione tanto en local como en producción
+        var proxyUrl = "/proxy/aemet?url=" + encodeURIComponent(apiUrl) + "&apiKey=" + encodeURIComponent(apiKey);
         
         console.log("Conectando a través del proxy:", proxyUrl);
         
@@ -96,7 +96,7 @@
                     // URL de los datos reales
                     var datosUrl = resp.datos;
                     // Segunda petición a través del proxy
-                    var proxyDatosUrl = "http://localhost:3000/proxy/aemet?url=" + encodeURIComponent(datosUrl) + "&apiKey=" + encodeURIComponent(apiKey);
+                    var proxyDatosUrl = "/proxy/aemet?url=" + encodeURIComponent(datosUrl) + "&apiKey=" + encodeURIComponent(apiKey);
                     
                     $.getJSON(proxyDatosUrl, function(data) {
                         console.log("Datos obtenidos, número de registros:", Array.isArray(data) ? data.length : "no es array");
@@ -241,10 +241,11 @@
                 apiUrl = baseUrl + "/observacion/convencional/todas";
             }
             
-            var proxyUrl = "http://localhost:3000/proxy/aemet?url=" + encodeURIComponent(apiUrl) + "&apiKey=" + encodeURIComponent(apiKey);
+            var proxyUrl = "/proxy/aemet?url=" + encodeURIComponent(apiUrl) + "&apiKey=" + encodeURIComponent(apiKey);
             
             // Mostrar spinner o mensaje de carga
             $("#testResults").html("<p>Cargando datos...</p>");
+            $("#testResults").show();
             
             // Realizar solicitud
             $.ajax({
@@ -254,7 +255,7 @@
                 success: function(resp) {
                     if (resp.estado === 200 && resp.datos) {
                         var datosUrl = resp.datos;
-                        var proxyDatosUrl = "http://localhost:3000/proxy/aemet?url=" + encodeURIComponent(datosUrl) + "&apiKey=" + encodeURIComponent(apiKey);
+                        var proxyDatosUrl = "/proxy/aemet?url=" + encodeURIComponent(datosUrl) + "&apiKey=" + encodeURIComponent(apiKey);
                         
                         $.getJSON(proxyDatosUrl, function(data) {
                             var resultHTML = "<h4>Prueba exitosa</h4>";

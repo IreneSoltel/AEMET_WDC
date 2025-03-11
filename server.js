@@ -6,6 +6,9 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Obtener la URL del host (para entornos de producción como Render)
+const HOST = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
+
 // Habilitar CORS para todas las rutas
 app.use(cors());
 
@@ -59,6 +62,6 @@ app.get('/', (req, res) => {
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor WDC para AEMET corriendo en puerto ${PORT}`);
-  console.log(`Abre http://localhost:${PORT} en tu navegador o en Tableau`);
+  console.log(`Servidor WDC para AEMET corriendo en ${HOST}`);
+  console.log(`Abre ${HOST} en tu navegador o en Tableau`);
 });
